@@ -32,6 +32,7 @@ table.Scorecard th:not(:last-child) {
 table.Scorecard td {
   height:30px;
   background: #F0F8FF;
+  border-bottom: 1px solid;
 }
 
 table.Scorecard tr td:not(:last-child) {

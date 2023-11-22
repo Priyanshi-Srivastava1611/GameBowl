@@ -8,6 +8,7 @@ import getFrameIndex from './getFrameIndex'
 const updateCumulativeScore = (rolls, frames, cumulativeScores, pins, lastScore) => {
 
   const currentScore = cumulativeScores.slice(-1)[0] || 0
+  console.log(pins,"pp")
 
   if ((!isEven(rolls) && !isStrike(lastScore) && !isSpare(pins.slice(-1)[0], lastScore)) || isBonusRoll(rolls)) {
     const frameScore = isBonusRoll(rolls) ?

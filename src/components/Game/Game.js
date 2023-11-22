@@ -20,15 +20,15 @@ export default class Game extends Component {
     const totalScore = cumulativeScores.slice(-1)[0]
     return (
       <div className='Game'>
-        <Scorecard
-          frames={frames}
-          cumulativeScores={cumulativeScores}
-          totalScore={totalScore}
-        />
         <Controls
           gameOver={gameOver}
           lastRoll={pins.slice(-1)[0]}
           rolls={rolls}
+        />
+        <Scorecard
+          frames={frames}
+          cumulativeScores={cumulativeScores}
+          totalScore={totalScore}
         />
         {gameOver &&
           <div className='Game-over-text'>
