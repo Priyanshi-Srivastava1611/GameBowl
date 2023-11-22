@@ -5,7 +5,7 @@ import {actions} from "../Game/state"; // Adjust the import path based on your p
 
 const Controls = (props) => {
   const dispatch = useDispatch();
-  const [scoreValue, setScoreValue] = useState(0);
+  const [scoreValue, setScoreValue] = useState('');
 
   const handleSubmit = () => {
     handleClick(scoreValue);
@@ -47,7 +47,7 @@ const Controls = (props) => {
           value={scoreValue}
           onChange={(e) => setScoreValue(e.target.value)}
         />
-        <button onClick={()=>{handleSubmit();setScoreValue(0)}} disabled={disableButton(Number(scoreValue))}>Submit</button>
+        <button onClick={()=>{handleSubmit();setScoreValue('')}} >Submit</button>
       </div>
       {props.rolls > 0 && (
         <button
