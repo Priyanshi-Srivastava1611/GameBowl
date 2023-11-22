@@ -10,7 +10,10 @@ const types = {
   restart: 'Game/Restart',
 }
 
-export const actions = mapValues(types, type => createAction(type))
+export const actions = {
+enterScore: (score) => ({ type: types.enterScore, payload: score }),
+restart: () => ({ type: types.restart }),
+}
 
 const initialState = {
   frames: [],
@@ -21,6 +24,7 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
+  console.log(action,"prr")
   switch (action.type) {
     case types.enterScore:
       const {

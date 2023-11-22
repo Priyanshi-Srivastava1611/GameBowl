@@ -1,62 +1,65 @@
-import React, {Component} from 'react'
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import './Controls.css';
+import {actions} from "../Game/state"; // Adjust the import path based on your project structure
 
-import './Controls.css'
+const Controls = (props) => {
+  const dispatch = useDispatch();
+  const [scoreValue, setScoreValue] = useState(0);
 
-export default class Controls extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      scoreValue: 0
-    };
-  }
+  const handleSubmit = () => {
+    handleClick(scoreValue);
+  };
 
-  handleSubmit=()=>{
-    this.handleClick(this.state.scoreValue);
-  }
-  handleClick = pins => {
-    const {
-      lastRoll,
-    } = this.props
-    if(this.state.scoreValue<=10 && !this.disableButton(Number(pins))){
-      this.props.enterScore(Number(pins))
-    }
-    else{
-      if(this.state.scoreValue>10){
-        alert("You can not enter a value greater than 10");
+  const handleClick = (pins) => {
+    const { lastRoll } = props;
+
+    if (scoreValue <= 10 && !disableButton(Number(pins))) {
+      dispatch(actions.enterScore(Number(pins)));
+    } else {
+      if (scoreValue > 10) {
+        alert("You cannot enter a value greater than 10");
+      } else {
+        alert(`Please enter a number less than or equal to ${10 - lastRoll}`);
       }
-      else{
-        alert(`Please enter a number less than or equal to ${10-lastRoll}`)
-      }
-      
     }
-    
-  }
+  };
 
-  disableButton = number => {
-    const {
-      gameOver,
-      lastRoll,
-      rolls,
-    } = this.props
+  const disableButton = (number) => {
+    const { gameOver, lastRoll, rolls } = props;
 
-    if (gameOver) return true
-    if (rolls % 2 === 0 || rolls === 0) return false
-    if (rolls === 19 && lastRoll === 10) return false
-    return lastRoll + number > 10
-  }
+    if (gameOver) return true;
+    if (rolls % 2 === 0 || rolls === 0) return false;
+    if (rolls === 19 && lastRoll === 10) return false;
+    return lastRoll + number > 10;
+  };
 
-  render () {
+  const handleRestart = () => {
+    dispatch(actions.restart());
+    setScoreValue(0);
+  };
 
-    return (
-      <div className='Container'>
-        <div>
-          <input placeholder='Enter your score' value={this.scoreValue} onChange={(e)=>this.setState({scoreValue: e.target.value})}/>
-          <button onClick={this.handleSubmit}>Submit</button>
-        </div>
-        {this.props.rolls > 0 &&
-          <button className={'Restart'} disabled={this.disableButton(Number(this.state.scoreValue))} onClick={this.props.restart}>Restart</button>
-        }
+  return (
+    <div className='Container'>
+      <div>
+        <input
+          placeholder='Enter your score'
+          value={scoreValue}
+          onChange={(e) => setScoreValue(e.target.value)}
+        />
+        <button onClick={()=>{handleSubmit();setScoreValue(0)}} disabled={disableButton(Number(scoreValue))}>Submit</button>
       </div>
-    )
-  }
-}
+      {props.rolls > 0 && (
+        <button
+          className={'Restart'}
+          
+          onClick={handleRestart}
+        >
+          Restart
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default Controls;

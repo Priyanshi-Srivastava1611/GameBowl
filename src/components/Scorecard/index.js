@@ -5,10 +5,22 @@ import './Scorecard.css'
 export default function Scorecard(props) {
   const renderScores = (frame, roll) => {
     const {frames} = props
+    let myframe_score=frames[frame] ? frames[frame][roll] : 'h'
+    if(roll===1 && frames[frame]){
+      if(frames[frame][0]+frames[frame][1]===10)
+      return '/'
+    }
+  
+    if(myframe_score===10)
+    {
+    
+    return 'X'
+    }
+    
     return frames[frame] ? frames[frame][roll] : ''
   }
     const {cumulativeScores, totalScore} = props
-    console.log(cumulativeScores,"cc")
+    //console.log(cumulativeScores,"cc")
     return (
       <div className='Container'>
         <table id='table' className='Scorecard' cellPadding='1' cellSpacing='0'>
